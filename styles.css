@@ -1,0 +1,149 @@
+:root {
+    --neon-blue: #00f3ff;
+    --neon-pink: #ff00ff;
+    --neon-green: #39ff14;
+    --cell-size: 100px;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #000033, #000066);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 20px var(--neon-blue),
+                inset 0 0 20px var(--neon-pink);
+}
+
+.game-title {
+    color: var(--neon-blue);
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px var(--neon-blue),
+                 0 0 20px var(--neon-blue);
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, var(--cell-size));
+    grid-template-rows: repeat(3, var(--cell-size));
+    gap: 10px;
+    margin: 20px auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--neon-blue);
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.cell:hover:not(.x):not(.o) {
+    background: rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.cell.x::before {
+    content: '🤖';
+    animation: pieceEnter 0.4s ease-out;
+}
+
+.cell.o::before {
+    content: '👽';
+    animation: pieceEnter 0.4s ease-out;
+}
+
+@keyframes pieceEnter {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px var(--neon-blue),
+                     0 0 20px var(--neon-blue);
+    }
+    to {
+        text-shadow: 0 0 20px var(--neon-blue),
+                     0 0 30px var(--neon-blue),
+                     0 0 40px var(--neon-blue);
+    }
+}
+
+.status-message {
+    color: var(--neon-blue);
+    font-size: 1.5em;
+    margin: 20px 0;
+    text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.restart-button {
+    background: rgba(0, 243, 255, 0.1);
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-button:hover {
+    background: rgba(0, 243, 255, 0.2);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.cell.winning {
+    animation: winner 1s ease-in-out infinite;
+}
+
+@keyframes winner {
+    0%, 100% {
+        box-shadow: 0 0 15px var(--neon-green);
+    }
+    50% {
+        box-shadow: 0 0 30px var(--neon-green);
+    }
+}
+
+@media (max-width: 500px) {
+    :root {
+        --cell-size: 80px;
+    }
+    
+    .game-title {
+        font-size: 1.8em;
+    }
+    
+    .status-message {
+        font-size: 1.2em;
+    }
+}
